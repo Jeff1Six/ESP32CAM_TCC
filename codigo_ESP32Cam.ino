@@ -27,8 +27,8 @@
 
 #include "camera_pins.h"
 
-const char* ssid = "Jefferson/Jeniffer";
-const char* password = "78341675";
+const char* ssid = "+++++++++++";
+const char* password = "+++++++++++";
 Pangodream_18650_CL BL;
 
 Audio audio;
@@ -97,18 +97,18 @@ void setup() {
   s->set_vflip(s, 1);
   s->set_hmirror(s, 1);
 #endif
-
-
-}
-void loop() {
   WiFi.begin(ssid, password);
 
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
   }
+
+}
+void loop() {
+
   classifyImage();
-  delay(5000);
+  delay(3000);
 
 }
 void classifyImage() {
@@ -118,7 +118,6 @@ void classifyImage() {
 
   if (!fb) {
     Serial.println("A captura da câmera falhou");
-    return classifyImage();
   }
   int valor_bateria = BL.getBatteryChargeLevel();
   size_t size = fb->len;
@@ -128,7 +127,7 @@ void classifyImage() {
   esp_camera_fb_return(fb);
   HTTPClient http;
   http.addHeader("Content-Type", "application/json");
-  http.begin("http://192.168.0.105:8000/hello?bateria=" + String(valor_bateria));
+  http.begin("http://192.168.0.103:8000/hello?bateria=" + String(valor_bateria));
   int httpResponseCode = http.POST(String(payload));
   if (httpResponseCode == 200) {
     Serial.print("HTTP Response Code: ");
@@ -138,11 +137,11 @@ void classifyImage() {
     classifyImage();
   } else {
     Serial.print("HTTP Response Code: ");
-    
+
     Serial.println(httpResponseCode);
     String respostaAPI = http.getString();
-    delay(5000);
-    
+    delay(3000);
+
     classifyImage();
   }
 }
