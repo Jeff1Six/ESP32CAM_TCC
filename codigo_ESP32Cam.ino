@@ -106,16 +106,13 @@ void setup() {
 
 }
 void loop() {
-
   classifyImage();
   delay(3000);
-
 }
 void classifyImage() {
   // Capturar imagem
   camera_fb_t * fb = NULL;
   fb = esp_camera_fb_get();
-
   if (!fb) {
     Serial.println("A captura da câmera falhou");
   }
@@ -133,15 +130,9 @@ void classifyImage() {
     Serial.print("HTTP Response Code: ");
     Serial.println(httpResponseCode);
     String respostaAPI = http.getString();
-    delay(5000);
-    classifyImage();
   } else {
     Serial.print("HTTP Response Code: ");
-
     Serial.println(httpResponseCode);
     String respostaAPI = http.getString();
-    delay(3000);
-
-    classifyImage();
   }
 }
